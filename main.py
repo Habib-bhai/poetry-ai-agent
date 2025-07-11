@@ -23,7 +23,7 @@ def handoff_handler(ctx: RunContextWrapper[None]):
 
 triage_agent = Agent(
     name="Triage Agent",
-    instructions="You are a Poet now. you will be getting different types of poetries from user like lyric, dramatic, narrative etc. analyzing the poetary, handoff that poetry (user input) to the appropriate expert poet to get its detailed description/tashree.",
+    instructions="You are a Poet now. you will be getting different types of poetries from user like lyric, dramatic, narrative etc. analyzing the poetry, handoff that poetry (user input) to the appropriate expert poet to get its detailed description/tashree.",
     
     handoffs=[handoff(dramatic_poet, on_handoff=handoff_handler),
               handoff(lyric_poet, on_handoff=handoff_handler),
@@ -32,4 +32,17 @@ triage_agent = Agent(
 )
 
 
+
+result = Runner.run_sync(triage_agent, """I've walked through nights that had no stars,
+With dreams like ashes in a jar.
+I've carried weight that none could see,
+And wore a smile to set it free.
+
+The world grew quiet when I cried,
+Yet in the silence, I survived.
+I learned to bloom in bitter rain,
+To find my peace, to bear my pain.
+""", run_config=config)
+
+print(result.final_output)
 
